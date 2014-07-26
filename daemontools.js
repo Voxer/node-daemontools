@@ -52,6 +52,8 @@ function svstat(file, cb) {
         // calculate uptime by getting the started time in TAI64 format
         data.started = new Date((buf.readInt32BE(4) - 10) * 1000);
         data.uptime = Math.floor((Date.now() - data.started.getTime()) / 1000);
+      } else {
+        delete data.pid;
       }
     } catch(e) {
       cb(e);
