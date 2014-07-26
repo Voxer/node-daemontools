@@ -1,0 +1,29 @@
+{
+  "name": "daemontools",
+  "description": "Control daemontools (svc, svstat) with Node",
+  "author": "Dave Eddy <dave@daveeddy.com> (http://www.daveeddy.com)",
+  "version": "0.0.0",
+  "repository": {
+    "url": "https://github.com/Voxer/node-daemontools.git",
+    "type": "git"
+  },
+  "main": "daemontools.js",
+  "scripts": {
+    "test": "for f in tests/*.js; do echo \"$f\"; node \"$f\" || exit 1; echo; done; echo 'Passed'"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "bin": {},
+  "engines": {
+    "node": "*"
+  },
+  "license": "MIT",
+  "keywords": [
+    "daemontools",
+    "djb",
+    "svc",
+    "svscan",
+    "svstat"
+  ]
+}
