@@ -79,7 +79,7 @@ function svc(file, args, cb) {
     if (err)
       return cb(err, code);
     else if (stderr)
-      return cb(new Error('stderr generated: ' + stderr, code));
+      return cb(new Error('stderr generated: ' + stderr), code);
     else
       return cb(null, code);
   });
