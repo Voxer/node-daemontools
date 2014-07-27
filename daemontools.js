@@ -28,8 +28,6 @@ function svstat(file, cb) {
     path: file
   };
 
-  // TODO stat ./supervise/ok and ./down
-
   // read the status file like `svstat` would
   fs.readFile(path.join(file, 'supervise/status'), function(err, buf) {
     if (err) {
@@ -74,7 +72,7 @@ function svstat(file, cb) {
  */
 module.exports.svc = svc;
 function svc(file, data, cb) {
-  return fs.writeFile(path.join(file, 'supervise/control'), data, cb);
+  return fs.appendFile(path.join(file, 'supervise/control'), data, cb);
 }
 
 // svc convenience functions
