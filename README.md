@@ -23,7 +23,7 @@ daemontools.svstat('/service/nginx', function(err, stats) {
 });
 
 // restart apache
-daemontools.restart('/service/apache', function(err, code) {
+daemontools.restart('/service/apache', function(err) {
   if (err)
     throw err; // permission denied, service not found, etc.
 
@@ -69,7 +69,7 @@ output
 
 ### `daemontools.svc(file, data, cb)`
 
-mimics `svc(1)` by writitng to a daemons `control` file
+mimics `svc(1)` by writing to a daemons `control` file
 
 - `file` - a service file
 - `data` - a string to pass to the `control` file, like `d` for down, `u` for up, etc.
@@ -78,7 +78,7 @@ mimics `svc(1)` by writitng to a daemons `control` file
 example:
 
 ``` js
-daemontools.svc('/service/nginx', 'dx', function(err, code) {
+daemontools.svc('/service/nginx', 'dx', function(err) {
   // => nginx is now disabled and exited
 })
 ```

@@ -64,7 +64,7 @@ function svstat(file, cb) {
 /**
  * send commands to a processes ./supervise/control file
  *
- * example: svc('/service/nginx', 'du', function(err, code) {})
+ * example: svc('/service/nginx', 'du', function(err) {})
  *
  * file: service file
  * data: a string to send to the control file
