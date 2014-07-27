@@ -40,16 +40,18 @@ function svstat(file, cb) {
       data.up = !!data.pid;
       data.paused = !!buf[16];
 
+      // what state the service wants to be in
       switch (String.fromCharCode(buf[17])) {
         case 'u': data.want = 'up'; break;
         case 'd': data.want = 'down'; break;
       }
 
-      if (data.up) {
-        // calculate uptime by getting the started time in TAI64 format
-        data.started = new Date((buf.readInt32BE(4) - 10) * 1000);
-        data.uptime = Math.floor((Date.now() - data.started.getTime()) / 1000);
-      } else {
+      // calculate uptime by getting the started time in TAI64 format
+      data.changed = new Date((buf.readInt32BE(4) - 10) * 1000);
+      data.elapsed = Math.floor((Date.now() - data.changed.getTime()) / 1000);
+
+      // remove the pid if the process is down
+      if (!data.up) {
         delete data.pid;
       }
     } catch(e) {

@@ -62,8 +62,8 @@ output
   "up": true,
   "paused": false,
   "want": "up",
-  "started": "2014-07-26T06:09:42.000Z",
-  "uptime": 5
+  "changed": "2014-07-26T06:09:42.000Z",
+  "elapsed": 5
 }
 ```
 
