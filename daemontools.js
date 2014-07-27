@@ -8,7 +8,6 @@
  * License: MIT
  */
 
-var execFile = require('child_process').execFile;
 var fs = require('fs');
 var path = require('path');
 
@@ -65,41 +64,31 @@ function svstat(file, cb) {
 
 
 /**
- * wrapper around `svc`
+ * send commands to a processes ./supervise/control file
  *
- * example: svc('/service/nginx', ['d', 'x'], function(err, code) {})
+ * example: svc('/service/nginx', 'du', function(err, code) {})
  *
  * file: service file
- * args: an array of arguments to pass to `svc`
- * cb: a callback that takes 2 arguments: a possible error and the exit code of `svc`
+ * data: a string to send to the control file
+ * cb: a callback that takes 1 argument: any possible error
  */
 module.exports.svc = svc;
-function svc(file, args, cb) {
-  args.push(file);
-  var child = execFile('svc', args, function(err, stdout, stderr) {
-    var code = err && err.code || 0;
-    if (err)
-      return cb(err, code);
-    else if (stderr)
-      return cb(new Error('stderr generated: ' + stderr), code);
-    else
-      return cb(null, code);
-  });
-  return child;
+function svc(file, data, cb) {
+  return fs.writeFile(path.join(file, 'supervise/control'), data, cb);
 }
 
 // svc convenience functions
-module.exports.up    = function up(file, cb)    { return svc(file, ['-u'], cb); };
-module.exports.down  = function down(file, cb)  { return svc(file, ['-d'], cb); };
-module.exports.once  = function once(file, cb)  { return svc(file, ['-o'], cb); };
-module.exports.term  = function term(file, cb)  { return svc(file, ['-t'], cb); };
-module.exports.kill  = function kill(file, cb)  { return svc(file, ['-k'], cb); };
-module.exports.exit  = function exit(file, cb)  { return svc(file, ['-x'], cb); };
-module.exports.pause = function pause(file, cb) { return svc(file, ['-p'], cb); };
-module.exports.cont  = function cont(file, cb)  { return svc(file, ['-c'], cb); };
-module.exports.hup   = function hup(file, cb)   { return svc(file, ['-h'], cb); };
-module.exports.int   = function int(file, cb)   { return svc(file, ['-i'], cb); };
-module.exports.alarm = function alarm(file, cb) { return svc(file, ['-a'], cb); };
+module.exports.up    = function up(file, cb)    { return svc(file, 'u', cb); };
+module.exports.down  = function down(file, cb)  { return svc(file, 'd', cb); };
+module.exports.once  = function once(file, cb)  { return svc(file, 'o', cb); };
+module.exports.term  = function term(file, cb)  { return svc(file, 't', cb); };
+module.exports.kill  = function kill(file, cb)  { return svc(file, 'k', cb); };
+module.exports.exit  = function exit(file, cb)  { return svc(file, 'x', cb); };
+module.exports.pause = function pause(file, cb) { return svc(file, 'p', cb); };
+module.exports.cont  = function cont(file, cb)  { return svc(file, 'c', cb); };
+module.exports.hup   = function hup(file, cb)   { return svc(file, 'h', cb); };
+module.exports.int   = function int(file, cb)   { return svc(file, 'i', cb); };
+module.exports.alarm = function alarm(file, cb) { return svc(file, 'a', cb); };
 
 // aliases
 module.exports.start   = module.exports.up;

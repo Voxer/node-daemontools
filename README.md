@@ -27,21 +27,19 @@ daemontools.restart('/service/apache', function(err, code) {
   if (err)
     throw err; // permission denied, service not found, etc.
 
-  console.log('svc exited with code: %d', code);
+  // => service restarted
 });
-
 ```
 
 This example will show the current status of the `nginx` daemon, as well as
-restart the `apache` service by forking `svc -t apache`, showing the code the
-`svc(1)` program exited with.
+restart the `apache` service.
 
 Usage
 -----
 
 ### `daemontools.svstat(file, cb)`
 
-A function that mimics `svstat(1)` by reading a daemons status file and extracting meaningful data.
+A function that mimics `svstat(1)` by reading a daemons `status` file and extracting meaningful data.
 
 - `file` - a service file
 - `cb` - a function in the form of `function(err, stats)`
@@ -69,18 +67,18 @@ output
 }
 ```
 
-### `daemontools.svc(file, args, cb)`
+### `daemontools.svc(file, data, cb)`
 
-A simple wrapper around `svc(1)`
+mimics `svc(1)` by writitng to a daemons `control` file
 
 - `file` - a service file
-- `args` - an array of arguments to pass to `svc(1)`
-- `cb` - a function in the form of `function(err, code)`
+- `data` - a string to pass to the `control` file, like `d` for down, `u` for up, etc.
+- `cb` - a function in the form of `function(err)` (passed to `fs.writeFile`)
 
 example:
 
 ``` js
-daemontools.svc('/service/nginx', ['d', 'x'], function(err, code) {
+daemontools.svc('/service/nginx', 'dx', function(err, code) {
   // => nginx is now disabled and exited
 })
 ```
