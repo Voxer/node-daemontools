@@ -73,7 +73,7 @@ mimics `svc(1)` by writing to a daemons `control` file
 
 - `file` - a service file
 - `data` - a string to pass to the `control` file, like `d` for down, `u` for up, etc.
-- `cb` - a function in the form of `function(err)` (passed to `fs.writeFile`)
+- `cb` - a function in the form of `function(err)` (passed to `fs.appendFile`)
 
 example:
 
